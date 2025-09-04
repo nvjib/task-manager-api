@@ -21,4 +21,8 @@ app.get("/tasks", async (req, res) => {
     return res.status(200).json(data)
 })
 
-app.listen(3000, () => console.log("Server is running on: http://localhost:3000"))
+if (require.main === module) {
+    app.listen(3000, () => console.log("Server is running on: http://localhost:3000"))
+}
+
+module.exports = app
