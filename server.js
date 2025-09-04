@@ -15,7 +15,7 @@ app.get("/tasks", async (req, res) => {
     }
 
     if (!data || data.length === 0) {
-        return res.status(400).json({ error: "Tasks not found" })
+        return res.status(404).json({ error: "Tasks not found" })
     }
 
     return res.status(200).json(data)
