@@ -21,10 +21,6 @@ app.get("/tasks", async (req, res) => {
     return res.status(200).json(data)
 })
 
-if (require.main === module) {
-    app.listen(3000, () => console.log("Server is running on: http://localhost:3000"))
-}
-
 // get a specific task
 app.get("/tasks/:id", async (req, res) => {
     const { id } = req.params
@@ -42,4 +38,6 @@ app.get("/tasks/:id", async (req, res) => {
     return res.status(200).json(data[0])
 })
 
-module.exports = app
+
+app.listen(3000, () => console.log("Server is running on: http://localhost:3000"))
+
