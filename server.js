@@ -42,7 +42,7 @@ app.get("/tasks/:id", async (req, res) => {
 app.post("/tasks", async (req, res) => {
     const { title, completed } = req.body
 
-    if (!title || typeof completed !== "boolean") {
+    if (!title.trim() || typeof completed !== "boolean") {
         return res.status(400).json({ error: "Missing Required Fields" })
     }
 
@@ -59,6 +59,41 @@ app.post("/tasks", async (req, res) => {
     return res.status(201).json(data)
 })
 
+// update a task
+app.put("/tasks/:id", async (req, res) => {
+    const { title, completed } = req.body
+    const { id } = req.params
+
+    if (!title.trim() || typeof completed !== "boolean") {
+        return res.status(400).json({ error: "Missing Required Fields" })
+    }
+
+    const { data, error } = await supabase
+        .from("tasks")
+        .select()
+        .eq("id", id)
+        .single()
+
+    if (error) {
+        return res.status(500).json({ error: error.message })
+    }
+
+    if (!data) {
+        return res.status(404).json({ error: "Task not found" })
+    }
+
+    const { error: updateError } = await supabase
+        .from("tasks")
+        .update({ title, completed })
+        .eq("id", id)
+        .single()
+
+    if (updateError) {
+        return res.status(500).json({ error: updateError.message })
+    }
+
+    return res.status(200).json({ message: "Task updated sucessfully"  })
+})
 
 app.listen(3000, () => console.log("Server is running on: http://localhost:3000"))
 
