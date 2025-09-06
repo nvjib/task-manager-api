@@ -38,6 +38,27 @@ app.get("/tasks/:id", async (req, res) => {
     return res.status(200).json(data[0])
 })
 
+// create a new task
+app.post("/tasks", async (req, res) => {
+    const { title, completed } = req.body
+
+    if (!title || typeof completed !== "boolean") {
+        return res.status(400).json({ error: "Missing Required Fields" })
+    }
+
+    const { data, error } = await supabase
+        .from("tasks")
+        .insert([{ title: title.trim(), completed }])
+        .select()
+        .single()
+
+    if (error) {
+        return res.status(500).json({ error: error.message })
+    }
+
+    return res.status(201).json(data)
+})
+
 
 app.listen(3000, () => console.log("Server is running on: http://localhost:3000"))
 
