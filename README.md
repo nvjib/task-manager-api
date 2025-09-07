@@ -21,7 +21,7 @@ A simple RESTful API for managing tasks, allowing users to create, read, update,
 - npm or yarn
 - Supabase account
 
-## 🚦 Running the Project
+## Running the Project
 
 1. Clone the repository
 2. Install dependencies: `npm install`
@@ -41,8 +41,7 @@ GET /tasks
   {
     "id": 1,
     "title": "Finish README",
-    "completed": false,
-    "created_at": "2024-01-01T10:00:00Z"
+    "completed": false
   }
 ]
 ```
