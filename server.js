@@ -101,15 +101,12 @@ app.put("/tasks/:id", async (req, res) => {
 
 // delete a task
 app.delete("/tasks/:id", async (req, res) => {
-    // extract id from URL
     const { id } = req.params
 
-    // id validation
     if (!id) {
         return res.status(400).json({ error: "Missing task ID" })
     }
 
-    // validate id exists in the database
     const { data, error } = await supabase
         .from("tasks")
         .select()
@@ -124,7 +121,6 @@ app.delete("/tasks/:id", async (req, res) => {
         return res.status(404).json({ error: "Task not found" })
     }
 
-    // delete task
     const { error: deleteError } = await supabase
         .from("tasks")
         .delete()
